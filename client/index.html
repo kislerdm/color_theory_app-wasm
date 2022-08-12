@@ -8,7 +8,7 @@
     <script>
         const go = new Go();
         WebAssembly.instantiateStreaming(
-            fetch("logic.wasm"), go.importObject
+            fetch("/assets/logic.wasm"), go.importObject
         ).then((result) => {
             go.run(result.instance);
         });
@@ -16,7 +16,20 @@
 </head>
 
 <body>
-
+    <div class="container">
+        <button type="button" onclick="runLogic()">Test</button>
+        <div class="color_output" id="color_output"></div>
+    </div>
 </body>
+
+<script>
+    const runLogic = () => {
+        const err = start(176,191,26);
+        if (err !== null) {
+            console.error(err.error);
+            alert("input is not valid");
+        }
+    };
+</script>
 
 </html>
