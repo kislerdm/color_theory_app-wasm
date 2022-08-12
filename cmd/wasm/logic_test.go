@@ -1,6 +1,8 @@
-// go:build js && wasm
+//go:build js
 
-package logic
+// +build,js,!unittest
+
+package main
 
 import (
 	"reflect"
@@ -12,12 +14,12 @@ var probeHTML string
 
 type procMimic struct{}
 
-func (m *procMimic) GenerateOutput(r, g, b float64) (Output, error) {
-	return (&p{}).GenerateOutput(r, g, b)
+func (m *procMimic) GenerateOutput(r, g, b float64) (main.Output, error) {
+	return (&main.p{}).GenerateOutput(r, g, b)
 }
 
-func (m *procMimic) GenerateUI(o Output) string {
-	return (&p{}).GenerateUI(o)
+func (m *procMimic) GenerateUI(o main.Output) string {
+	return (&main.p{}).GenerateUI(o)
 }
 
 func (m *procMimic) SetUI(html string) {
@@ -26,7 +28,7 @@ func (m *procMimic) SetUI(html string) {
 
 func Test_exec(t *testing.T) {
 	type args struct {
-		p processor
+		p main.processor
 	}
 	type params struct {
 		this js.Value

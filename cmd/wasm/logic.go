@@ -1,6 +1,9 @@
 // Package logic defines the logic to handle client input in web browser.
-// go:build js && wasm
-package logic
+//go:build js
+
+// +build,js,!unittest
+
+package main
 
 import (
 	"fmt"
