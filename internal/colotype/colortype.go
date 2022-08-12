@@ -1,4 +1,4 @@
-package app
+package colotype
 
 import (
 	_ "embed"
@@ -18,19 +18,14 @@ func init() {
 	}
 }
 
-// Input defines prediction input.
-type Input struct {
-	R, G, B float64
-}
-
-// Predict predicts the color type based on its RGB code.
-func Predict(data Input) (bool, error) {
-	r, err := m.Predict(
+// FindColorTypeByRGB predicts the color type based on its RGB code.
+func FindColorTypeByRGB(r, g, b float64) (bool, error) {
+	p, err := m.Predict(
 		SparceMatrix{
 			{
-				"r": data.R,
-				"g": data.G,
-				"b": data.B,
+				"r": r,
+				"g": g,
+				"b": b,
 			},
 		},
 	)
@@ -39,5 +34,5 @@ func Predict(data Input) (bool, error) {
 		return false, err
 	}
 
-	return r[0], nil
+	return p[0], nil
 }
