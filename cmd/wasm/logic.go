@@ -51,13 +51,13 @@ func (p *p) GenerateUI(o Output) string {
 
 	if o.Name != "" {
 		html += `<div><label for="output_name" id="output_label">Color Name:</label><output name="color_name" id="output_name"> ` +
-			o.Name + `</output></div>\n`
+			o.Name + `</output></div>`
 	}
 	t := "Cool"
 	if o.IsWarm {
 		t = "Warm"
 	}
-	html += `<div><label for="output_type" id="output_label">Color Type:</label><output name="color_type" id="output_type"> ` + t + `</output></div>\n`
+	html += `<div><label for="output_type" id="output_label">Color Type:</label><output name="color_type" id="output_type"> ` + t + `</output></div>`
 
 	return html
 }
