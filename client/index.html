@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Color Theory App</title>
+    <meta charset="utf-8"/>
+    <link rel="stylesheet" href="./assets/styles.css">
+    <script src="./assets/wasm_exec.js"></script>
+    <script>
+        const go = new Go();
+        WebAssembly.instantiateStreaming(
+            fetch("logic.wasm"), go.importObject
+        ).then((result) => {
+            go.run(result.instance);
+        });
+    </script>
+</head>
+
+<body>
+
+</body>
+
+</html>
