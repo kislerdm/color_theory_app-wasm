@@ -1,9 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Color Theory App</title>
+    <title>color theory app</title>
+
     <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="theme-color" content="#ffffff">
+
     <link rel="stylesheet" href="./assets/styles.css">
+
     <script src="./assets/wasm_exec.js"></script>
     <script>
         const go = new Go();
@@ -16,20 +21,62 @@
 </head>
 
 <body>
+<main>
+    <header>Color Theory App</header>
     <div class="container">
-        <button type="button" onclick="runLogic()">Test</button>
-        <div class="color_output" id="color_output"></div>
+        <div class="color_input">
+            <h2>Pick a color</h2>
+            <input type="color" id="colorpicker" onchange="runLogic()" value="#000000">
+            <div id="input_data">
+                <div>
+                    <label for="input_hex" id="input_hex">Color HEX Code: </label>
+                    <output name="input_hex" id="input_hex_value"></output>
+                </div>
+                <div>
+                    <label for="input_rgb" id="input_rgb">Color RGB Code: </label>
+                    <output name="input_rgb" id="input_rgb_value"></output>
+                </div>
+            </div>
+            <div id="color_output"></div>
+        </div>
     </div>
+</main>
 </body>
 
 <script>
-    const runLogic = () => {
-        const err = start(176,191,26);
+    window.onload = () => {
+        const el = document.getElementsByTagName("main");
+        const year = new Date().getFullYear();
+        const footer = document.createElement("footer");
+        footer.innerHTML = `${year} © <a href="https://www.dkisler.com" target="_blank" rel="noopener">D.Kisler</a>`;
+        el[0].appendChild(footer);
+    }
+
+    function input() {
+        const slider = document.getElementById("colorpicker");
+        const rgb = hexToRgb(slider.value);
+        document.getElementById("input_hex_value").innerHTML = slider.value;
+        document.getElementById("input_rgb_value").innerHTML = Object.values(rgb).join(",");
+        return rgb;
+    }
+
+    function runLogic() {
+        const rgb = input();
+        const err = start(rgb.r, rgb.g, rgb.b);
         if (err !== null) {
             console.error(err.error);
             alert("input is not valid");
         }
-    };
+    }
+
+    function hexToRgb(colorhexs) {
+        colorhexs = colorhexs.replace("#", "")
+        return {
+            r: parseInt(colorhexs.substr(0, 2), 16),
+            g: parseInt(colorhexs.substr(2, 2), 16),
+            b: parseInt(colorhexs.substr(4, 2), 16),
+        }
+    }
 </script>
 
 </html>
