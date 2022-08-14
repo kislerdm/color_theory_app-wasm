@@ -9,6 +9,11 @@ test: ## Runs unit tests.
 	@ go tool cover -func coverage.out
 	@ rm coverage.out
 
+make test.ci:
+    @ go test --tags=unittest -v -coverpkg=./... -coverprofile=coverage.out ./...
+    @ go tool cover -func coverage.out
+    @ rm coverage.out
+
 WASM_PORT := 9090
 WASMNAME_BIN := ./client/assets/logic.wasm
 CODE_DIR := ./cmd/wasm

@@ -28,17 +28,22 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
+    env:
+      GOOS: js
+      GOARCH: wasm
     steps:
       - name: Set up Go
         uses: actions/setup-go@v2
         with:
-          go-version: 1.17
+          go-version: 1.17.7
       - name: Checkout
         uses: actions/checkout@v3
         with:
           submodules: true
       - name: Test
-        run:  make test
+        run:  |
+          - echo "${{env.GOROOT}}/misc/wasm" >> $GITHUB_PATH
+          - make test.ci
       - name: Build
         run:  make web.build
       - name: Copy js deps
