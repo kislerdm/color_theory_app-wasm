@@ -21,7 +21,7 @@ type color struct {
 
 type colors []color
 
-type distancesMap map[string]float64
+type distancesMap map[float64]string
 
 const distMaxThreshold = 50.
 
@@ -30,7 +30,7 @@ func (c colors) calculateAcceptableDistances(r, g, b float64) distancesMap {
 	for _, el := range c {
 		distance := math.Sqrt(math.Pow(el.R-r, 2) + math.Pow(el.G-g, 2) + math.Pow(el.B-b, 2))
 		if distance <= distMaxThreshold {
-			o[el.Name] = distance
+			o[distance] = el.Name
 		}
 	}
 	return o
@@ -44,7 +44,7 @@ func (c colors) ReadColorNameByRGB(r, g, b float64) (output string) {
 	}
 
 	distanceMin := distMaxThreshold
-	for name, distance := range distances {
+	for distance, name := range distances {
 		if distance < distanceMin {
 			distanceMin = distance
 			output = name
