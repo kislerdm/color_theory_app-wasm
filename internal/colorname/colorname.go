@@ -21,36 +21,37 @@ type color struct {
 
 type colors []color
 
-func (c colors) calculateAcceptableDistances(r, g, b float64) []float64 {
-	const distMaxThreshold = 50.
+type distancesMap map[string]float64
 
-	var o []float64
+const distMaxThreshold = 50.
+
+func (c colors) calculateAcceptableDistances(r, g, b float64) distancesMap {
+	o := distancesMap{}
 	for _, el := range c {
 		distance := math.Sqrt(math.Pow(el.R-r, 2) + math.Pow(el.G-g, 2) + math.Pow(el.B-b, 2))
 		if distance <= distMaxThreshold {
-			o = append(o, distance)
+			o[el.Name] = distance
 		}
 	}
 	return o
 }
 
-func (c colors) ReadColorNameByRGB(r, g, b float64) string {
+func (c colors) ReadColorNameByRGB(r, g, b float64) (output string) {
 	distances := c.calculateAcceptableDistances(r, g, b)
 
 	if len(distances) == 0 {
-		return ""
+		return
 	}
 
-	elIndex := 0
-	distanceMin := distances[elIndex]
-	for i, distance := range distances {
+	distanceMin := distMaxThreshold
+	for name, distance := range distances {
 		if distance < distanceMin {
 			distanceMin = distance
-			elIndex = i
+			output = name
 		}
 	}
 
-	return c[elIndex].Name
+	return
 }
 
 var colorsData colors

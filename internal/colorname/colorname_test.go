@@ -20,7 +20,25 @@ func TestReadColorNameByRGB(t *testing.T) {
 				g: 185,
 				b: 232,
 			},
-			want: "Acid green",
+			want: "Aero",
+		},
+		{
+			name: "black",
+			args: args{
+				r: 0,
+				g: 0,
+				b: 0,
+			},
+			want: "Black",
+		},
+		{
+			name: "white",
+			args: args{
+				r: 255,
+				g: 255,
+				b: 255,
+			},
+			want: "White",
 		},
 	}
 	for _, tt := range tests {
