@@ -10,7 +10,7 @@ test:  ## Runs unit tests.
 	@ rm coverage.out
 
 WASM_PORT := 9090
-WASMNAME_BIN := ./client/assets/logic.wasm
+WASM_DIR := ./client/assets
 CODE_DIR := ./cmd/wasm
 
 web.setup: ## Sets WASM Go dependencies.
@@ -19,7 +19,7 @@ web.setup: ## Sets WASM Go dependencies.
 web.build: ## Compiles the app.
 	@ GOOS=js GOARCH=wasm CGO_ENABLED=0 \
 		go build \
-		-o $(WASMNAME_BIN) cmd/wasm/*.go
+		-o $(WASM_DIR)/logic.wasm cmd/wasm/*.go
 
 web.server: ## Run a temp web server.
 	@ PORT=$(WASM_PORT) DIR_WEB=./client/ go run cmd/server/main.go
