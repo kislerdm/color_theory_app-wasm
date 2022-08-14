@@ -26,8 +26,8 @@
     <div class="container">
         <div class="color_input">
             <h2>Pick a color</h2>
-            <input type="color" id="colorpicker" onchange="runLogic()" value="#000000">
-            <div id="input_data">
+            <input type="color" id="colorpicker" onchange="handleInput()" value="#000000">
+            <div id="input_data" hidden>
                 <div>
                     <label for="input_hex" id="input_hex">Color HEX Code: </label>
                     <output name="input_hex" id="input_hex_value"></output>
@@ -44,7 +44,8 @@
 </body>
 
 <script>
-    window.onload = () => {
+
+    function setFooter() {
         const el = document.getElementsByTagName("main");
         const year = new Date().getFullYear();
         const footer = document.createElement("footer");
@@ -52,30 +53,35 @@
         el[0].appendChild(footer);
     }
 
-    function input() {
-        const slider = document.getElementById("colorpicker");
-        const rgb = hexToRgb(slider.value);
-        document.getElementById("input_hex_value").innerHTML = slider.value;
-        document.getElementById("input_rgb_value").innerHTML = Object.values(rgb).join(",");
-        return rgb;
-    }
-
-    function runLogic() {
-        const rgb = input();
-        const err = start(rgb.r, rgb.g, rgb.b);
+    function runLogic(r,g,b) {
+        const err = start(r, g, b);
         if (err !== null) {
             console.error(err.error);
             alert("input is not valid");
         }
     }
 
+    window.addEventListener("load", setFooter);
+
+    function handleInput() {
+        document.getElementById("input_data").hidden = false;
+
+        const inputHex = document.getElementById("colorpicker").value;
+        document.getElementById("input_hex_value").innerHTML = inputHex;
+
+        const rgb = hexToRgb(inputHex);
+        document.getElementById("input_rgb_value").innerHTML = rgb.join(",");
+
+        runLogic(...rgb);
+    }
+
     function hexToRgb(colorhexs) {
         colorhexs = colorhexs.replace("#", "")
-        return {
-            r: parseInt(colorhexs.substr(0, 2), 16),
-            g: parseInt(colorhexs.substr(2, 2), 16),
-            b: parseInt(colorhexs.substr(4, 2), 16),
-        }
+        return [
+            parseInt(colorhexs.substr(0, 2), 16),
+            parseInt(colorhexs.substr(2, 2), 16),
+            parseInt(colorhexs.substr(4, 2), 16),
+        ]
     }
 </script>
 
