@@ -3,16 +3,11 @@
 help: ## Prints help message.
 	@ grep -h -E '^[a-zA-Z_.-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[1m%-30s\033[0m %s\n", $$1, $$2}'
 
-test: ## Runs unit tests.
-	@ GOOS=js GOARCH=wasm go test --tags=unittest -exec="$(GOROOT)/misc/wasm/go_js_wasm_exec" \
+test:  ## Runs unit tests.
+	@ GOARCH=wasm GOOS=js go test --tags=unittest -exec="$(GOROOT)/misc/wasm/go_js_wasm_exec" \
 	    -v -coverpkg=./... -coverprofile=coverage.out ./...
 	@ go tool cover -func coverage.out
 	@ rm coverage.out
-
-make test.ci:
-    @ go test --tags=unittest -v -coverpkg=./... -coverprofile=coverage.out ./...
-    @ go tool cover -func coverage.out
-    @ rm coverage.out
 
 WASM_PORT := 9090
 WASMNAME_BIN := ./client/assets/logic.wasm

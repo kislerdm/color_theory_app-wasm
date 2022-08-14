@@ -28,9 +28,6 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
-    env:
-      GOOS: js
-      GOARCH: wasm
     steps:
       - name: Set up Go
         uses: actions/setup-go@v2
@@ -40,10 +37,17 @@ jobs:
         uses: actions/checkout@v3
         with:
           submodules: true
+      - name: Setup PATH for wasm
+        run: echo "${{env.GOROOT}}/misc/wasm" >> $GITHUB_PATH
+      - name: Set up Node.js
+        uses: actions/setup-node@v2.4.0
+        with:
+          node-version: 14
       - name: Test
-        run:  |
-          - echo "${{env.GOROOT}}/misc/wasm" >> $GITHUB_PATH
-          - make test.ci
+        run:  go test -v --tags=unittest ./...
+        env:
+          GOOS: js
+          GOARCH: wasm
       - name: Build
         run:  make web.build
       - name: Copy js deps
