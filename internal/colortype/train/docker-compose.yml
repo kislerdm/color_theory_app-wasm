@@ -1,0 +1,7 @@
+version: '3.8'
+services:
+  train:
+    build: .
+    volumes:
+      - ${PWD}/warm_cold_colors.csv:/app/warm_cold_colors.csv
+      - ${PWD}/model/:/app/model/

@@ -8,7 +8,7 @@ import (
 	"syscall/js"
 
 	"github.com/kislerdm/color_theory_app-wasm/internal/colorname"
-	"github.com/kislerdm/color_theory_app-wasm/internal/colotype"
+	"github.com/kislerdm/color_theory_app-wasm/internal/colortype"
 )
 
 func ui(colorName string, isWarm bool) (html string) {
@@ -40,7 +40,7 @@ func run(args []js.Value) (html string, err error) {
 		return "", fmt.Errorf("wrong RGB input")
 	}
 
-	isWarm, err := colotype.FindColorTypeByRGB(r, g, b)
+	isWarm, err := colortype.FindColorTypeByRGB(r, g, b)
 	if err != nil {
 		return "", err
 	}

@@ -61,7 +61,7 @@ if __name__ == "__main__":
     base = pathlib.Path(__file__).absolute().parent
 
     path_input = f"{base}/warm_cold_colors.csv"
-    path_model = f"{base}/model.json"
+    path_model = f"{base}/model/model.json"
     seed = 2019
 
     log = logging.Logger(__file__)

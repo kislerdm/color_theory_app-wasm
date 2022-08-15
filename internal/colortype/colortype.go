@@ -1,18 +1,15 @@
-package colotype
+package colortype
 
 import (
 	_ "embed"
 	"log"
 )
 
-//go:embed train/model.json
-var modelCfg []byte
-
 var m *Model
 
 func init() {
 	var err error
-	m, err = LoadModelConfig(modelCfg)
+	m, err = LoadModelConfig()
 	if err != nil {
 		log.Fatalln("cannot load the model", err)
 	}

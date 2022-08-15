@@ -1,8 +1,6 @@
-package colotype
+package colortype
 
 import (
-	"bytes"
-	"encoding/json"
 	"fmt"
 	"math"
 )
@@ -101,14 +99,13 @@ func (m *Model) Predict(dataFrame SparceMatrix) ([]bool, error) {
 	return o, nil
 }
 
-// LoadModelConfig loads model JSON configuration from bytes.
-func LoadModelConfig(data []byte) (*Model, error) {
-	var v XGB
-	if err := json.NewDecoder(bytes.NewReader(data)).Decode(&v); err != nil {
-		return nil, err
+// LoadModelConfig loads model.
+func LoadModelConfig() (*Model, error) {
+	if modelDef == nil {
+		return nil, fmt.Errorf("wrong model generated")
 	}
 	return &Model{
-		trees:           v,
+		trees:           modelDef,
 		BinaryThreshold: 0.5,
 	}, nil
 }
