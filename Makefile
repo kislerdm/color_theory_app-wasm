@@ -16,7 +16,7 @@ train:
 	    docker-compose run train "python main.py"
 
 generate.model: train ## Re-trains and generates the model object.
-	@ cd ./internal/colortype/train && go run main.go
+	@ cd ./internal/colortype/train && go run --tags=gen main.go
 
 WASM_PORT := 9090
 WASM_DIR := ./client/assets

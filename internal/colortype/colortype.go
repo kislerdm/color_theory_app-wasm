@@ -1,3 +1,6 @@
+//go:build !gen
+// +build !gen
+
 package colortype
 
 import (
@@ -8,10 +11,12 @@ import (
 var m *Model
 
 func init() {
-	var err error
-	m, err = LoadModelConfig()
-	if err != nil {
-		log.Fatalln("cannot load the model", err)
+	if modelDef == nil {
+		log.Fatalln("wrong model generated")
+	}
+	m = &Model{
+		trees:           modelDef,
+		BinaryThreshold: 0.5,
 	}
 }
 

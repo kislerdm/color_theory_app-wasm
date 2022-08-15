@@ -99,17 +99,6 @@ func (m *Model) Predict(dataFrame SparceMatrix) ([]bool, error) {
 	return o, nil
 }
 
-// LoadModelConfig loads model.
-func LoadModelConfig() (*Model, error) {
-	if modelDef == nil {
-		return nil, fmt.Errorf("wrong model generated")
-	}
-	return &Model{
-		trees:           modelDef,
-		BinaryThreshold: 0.5,
-	}, nil
-}
-
 func sigmoid(x float64) float64 {
 	return 1. / (1. + math.Exp(-x))
 }

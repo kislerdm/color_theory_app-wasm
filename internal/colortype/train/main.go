@@ -1,5 +1,5 @@
-//go:build !unittest
-// +build !unittest
+//go:build gen
+// +build gen
 
 // Model object generator
 package main
@@ -55,15 +55,17 @@ func generateModelGoFile(v *colortype.XGB) error {
 		Leaf:      {{ .Leaf }},
 		{{- end }}
 },
-{{- end }}package colortype
+{{- end }}//go:build !gen
+// +build !gen
 
-// ModelDef defines the XGB model trees.
-var ModelDef = XGB{
+package colortype
+
+// modelDef defines the XGB model trees.
+var modelDef = XGB{
 {{- range . }}
 	{{ template "node" . }}
 {{- end }}
 }`
-	log.Println(getOutputPath())
 	f, err := os.Create(getOutputPath())
 	if err != nil {
 		return err
