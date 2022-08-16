@@ -37,21 +37,14 @@ jobs:
         uses: actions/checkout@v3
         with:
           submodules: true
-#      - name: Setup PATH for wasm
-#        run: echo "${{env.GOROOT}}/misc/wasm" >> $GITHUB_PATH
-#      - name: Set up Node.js
-#        uses: actions/setup-node@v2.4.0
-#        with:
-#          node-version: 14
-#      - name: Test
-#        run:  go test -v --tags=unittest ./...
-#        env:
-#          GOOS: js
-#          GOARCH: wasm
+      - name: Generate model
+        run: make generate.model
+      - name: Test
+        run:  make test
       - name: Build
-        run:  make web.build
+        run:  make build
       - name: Copy js deps
-        run: make web.setup
+        run: make setup
       - name: Setup Pages
         uses: actions/configure-pages@v1
       - name: Upload artifact
