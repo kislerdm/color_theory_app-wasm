@@ -6,8 +6,7 @@ help: ## Prints help message.
 	@ grep -h -E '^[a-zA-Z_.-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[1m%-30s\033[0m %s\n", $$1, $$2}'
 
 test:  ## Runs unit tests.
-	@ GOARCH=wasm GOOS=js go test --tags=unittest -exec="$(GOROOT)/misc/wasm/go_js_wasm_exec" \
-	    -v -coverpkg=./... -coverprofile=coverage.out ./...
+	@ go test --tags=unittest -v -coverpkg=./... -coverprofile=coverage.out ./...
 	@ go tool cover -func coverage.out
 	@ rm coverage.out
 
@@ -26,10 +25,20 @@ build:
 	@ docker run --rm \
         -v $(PWD):/src \
         -w="/src" \
-        tinygo/tinygo:0.24.0 tinygo build -o client/assets/logic.wasm -target=wasm cmd/wasm/*.go
+        tinygo/tinygo:0.24.0 cp tinygo \
+            build -target=wasm \
+                -gc=leaking \
+                -opt=2 \
+                -no-debug \
+                -panic=trap \
+            -o client/assets/logic.wasm cmd/wasm/main.go
 
-web.setup: ## Sets WASM Go dependencies.
-	@ cp "$(GOROOT)/misc/wasm/wasm_exec.js" $(WASM_DIR)
+setup: ## Sets WASM Go dependencies.
+	@ docker run --rm \
+              -v $(PWD):/src \
+              -w="/src" \
+              tinygo/tinygo:0.24.0 \
+              -c "cp /usr/local/tinygo/targets/wasm_exec.js client/assets"
 
 web.build: ## Compiles the app.
 	@ GOOS=js GOARCH=wasm CGO_ENABLED=0 \
