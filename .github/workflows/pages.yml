@@ -39,6 +39,8 @@ jobs:
           submodules: true
       - name: Generate model
         run: make generate.model
+      - name: Generate colors name
+        run: make generate.colors
       - name: Test
         run:  make test
       - name: Build
