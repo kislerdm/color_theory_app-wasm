@@ -1,7 +1,7 @@
 package logic
 
 import (
-	"fmt"
+	"errors"
 
 	"github.com/kislerdm/color_theory_app-wasm/internal/colorname"
 	"github.com/kislerdm/color_theory_app-wasm/internal/colortype"
@@ -25,7 +25,7 @@ func ui(colorName string, isWarm bool) (html string) {
 
 func Run(r, g, b float64) (html string, err error) {
 	if r < 0 || r > 255 || g < 0 || g > 255 || b < 0 || b > 255 {
-		return "", fmt.Errorf("wrong RGB input")
+		return "", errors.New("wrong RGB input")
 	}
 
 	isWarm, err := colortype.FindColorTypeByRGB(r, g, b)

@@ -1,7 +1,7 @@
 package colortype
 
 import (
-	"fmt"
+	"errors"
 	"math"
 )
 
@@ -57,7 +57,7 @@ func (m *Model) predictRow(dataRow SparceVector) (float64, error) {
 		for {
 			n := tree.getNodeByID(idx)
 			if n == nil {
-				return 0, fmt.Errorf("node %d not found", idx)
+				return 0, errors.New("node not found")
 			}
 
 			if len(n.Children) == 0 {
