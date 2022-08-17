@@ -3,7 +3,7 @@
 
 package colorname
 
-var colorsData = colors{
+var colorsData = []color{
 	{Name: "Acid green", R: 176, G: 191, B: 26},
 	{Name: "Aero", R: 124, G: 185, B: 232},
 	{Name: "Aero blue", R: 201, G: 255, B: 229},

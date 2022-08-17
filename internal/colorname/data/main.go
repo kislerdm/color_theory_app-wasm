@@ -67,7 +67,7 @@ func generateColorsGoFile(v []color) error {
 
 package colorname
 
-var colorsData = colors{
+var colorsData = []color{
 {{- range . }}
 	{{ template "color" . }}
 {{- end }}
