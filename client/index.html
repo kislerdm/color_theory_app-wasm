@@ -7,6 +7,9 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="theme-color" content="#ffffff">
 
+    <link rel="shortcut icon" href="./assets/favicon.jpg" type="image/x-icon">
+    <link rel="icon" href="./assets/favicon.jpg" type="image/x-icon">
+
     <link rel="stylesheet" href="./assets/styles.css">
 
     <script src="./assets/wasm_exec.js"></script>
@@ -53,7 +56,7 @@
         el[0].appendChild(footer);
     }
 
-    function runLogic(r,g,b) {
+    function runLogic(r, g, b) {
         const err = start(r, g, b);
         if (err !== null) {
             console.error(err.error);
