@@ -1,9 +1,7 @@
-package colotype
+package colortype
 
 import (
-	"bytes"
-	"encoding/json"
-	"fmt"
+	"errors"
 	"math"
 )
 
@@ -59,7 +57,7 @@ func (m *Model) predictRow(dataRow SparceVector) (float64, error) {
 		for {
 			n := tree.getNodeByID(idx)
 			if n == nil {
-				return 0, fmt.Errorf("node %d not found", idx)
+				return 0, errors.New("node not found")
 			}
 
 			if len(n.Children) == 0 {
@@ -99,18 +97,6 @@ func (m *Model) Predict(dataFrame SparceMatrix) ([]bool, error) {
 	}
 
 	return o, nil
-}
-
-// LoadModelConfig loads model JSON configuration from bytes.
-func LoadModelConfig(data []byte) (*Model, error) {
-	var v XGB
-	if err := json.NewDecoder(bytes.NewReader(data)).Decode(&v); err != nil {
-		return nil, err
-	}
-	return &Model{
-		trees:           v,
-		BinaryThreshold: 0.5,
-	}, nil
 }
 
 func sigmoid(x float64) float64 {
