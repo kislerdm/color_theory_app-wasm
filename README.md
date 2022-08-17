@@ -52,3 +52,5 @@ BenchmarkFindColorNameByRGBv2-10          135073              8787 ns/op        
 PASS
 ok      github.com/kislerdm/color_theory_app-wasm/internal/colorname    3.554s
 ```
+
+The logic rework led to further reduction of the wasm binary size to 147791 bytes as an additional beneficial effect on top of computational and memory allocation performance improvements.
