@@ -1,5 +1,5 @@
-//go:build gen
-// +build gen
+//go:build gen && !js
+// +build gen,!js
 
 // Model object generator
 package main

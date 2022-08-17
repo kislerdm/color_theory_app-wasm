@@ -1,5 +1,5 @@
-//go:build gen
-// +build gen
+//go:build gen && !js
+// +build gen,!js
 
 // colorname datagen
 package main
@@ -67,7 +67,7 @@ func generateColorsGoFile(v []color) error {
 
 package colorname
 
-var colorsData = colors{
+var colorsData = []color{
 {{- range . }}
 	{{ template "color" . }}
 {{- end }}

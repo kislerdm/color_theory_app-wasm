@@ -36,3 +36,21 @@ Note that the tinygo compiler does not [support](https://tinygo.org/docs/referen
 |:-----------:|---------------:|:--------|
 |   Default   |          18669 | -       |
 |   TinyGo    |          16001 | -       |
+
+
+## Performance optimisation
+
+### [colorname](./internal/colorname)
+
+```bash
+go test -bench=. -benchmem ./internal/colorname 
+goos: darwin
+goarch: arm64
+pkg: github.com/kislerdm/color_theory_app-wasm/internal/colorname
+BenchmarkFindColorNameByRGB-10              6038            196192 ns/op            8046 B/op          9 allocs/op
+BenchmarkFindColorNameByRGBv2-10          135073              8787 ns/op               0 B/op          0 allocs/op
+PASS
+ok      github.com/kislerdm/color_theory_app-wasm/internal/colorname    3.554s
+```
+
+The logic rework led to further reduction of the wasm binary size to 147791 bytes as an additional beneficial effect on top of computational and memory allocation performance improvements.
