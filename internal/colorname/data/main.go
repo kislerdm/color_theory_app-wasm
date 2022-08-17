@@ -1,5 +1,5 @@
-//go:build gen
-// +build gen
+//go:build gen && !js
+// +build gen,!js
 
 // colorname datagen
 package main
